@@ -33,3 +33,7 @@ Since we processed `image.png` and created `image.mcfunction` we can run that fu
 ```sh
 /function io:image
 ```
+
+Below is a sample screenshot. There's still a lot of work to do.
+
+!screenshots/jug.png!
