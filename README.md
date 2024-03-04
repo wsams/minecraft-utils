@@ -1,5 +1,9 @@
 # mkmcfunction.py
 
+## Purpose
+
+This script `mkmcfunction.py` is used to convert an image (JPG/PNG for example) into an `mcfunction` that you can use to render the image in your Minecraft world.
+
 ## Usage
 
 Create a datapack. In your minecraft world folder create the directory `datapacks/your_data_pack_name/data/io/functions`.
