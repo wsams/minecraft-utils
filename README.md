@@ -36,4 +36,4 @@ Since we processed `image.png` and created `image.mcfunction` we can run that fu
 
 Below is a sample screenshot. There's still a lot of work to do.
 
-!screenshots/jug.png!
+![sample image render in-game minecraft](screenshots/jug.png)
