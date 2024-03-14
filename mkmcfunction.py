@@ -83,7 +83,7 @@ def find_closest_color(r, g, b):
     
     return closest_color
 
-def convert_image_to_mcfunction(image_path, num_colors):
+def convert_image_to_mcfunction(image_path, num_colors, offset=5000, max_dimension=200):
     # Load the image
     img = Image.open(image_path)
 
@@ -105,7 +105,7 @@ def convert_image_to_mcfunction(image_path, num_colors):
 
     # Generate Minecraft commands
     commands = []
-    is_horizontal = False
+    is_horizontal = True
     # z is the base height of where we want the image to start when rendering vertically (the bottom row will be at this height)
     z = 100
     # for y in range(resized_height):
@@ -168,15 +168,15 @@ if args.image and not args.generate_json:
 
     image_base_name, image_ext = parse_image_filename(args.image)
     image_path = f"{image_base_name}.{image_ext}"  # Replace with your image path
-    max_dimension = 256 # max width and height
-    offset = 0
+    max_dimension = 200 # max width and height
+    offset = 5000
 
     colors_to_blocks = load_block_color_map("blockcolormap.json")
 
     # num_colors = 256  # Number of colors for reduced palette
     num_colors = len(list(colors_to_blocks))
 
-    convert_image_to_mcfunction(image_path, num_colors)
+    convert_image_to_mcfunction(image_path, num_colors, offset, max_dimension)
 
 if args.generate_json:
     # This will create a dictionary of colors to blocks that can be copied into `blockcolormap.json`
