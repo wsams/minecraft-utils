@@ -137,6 +137,7 @@ def convert_image_to_mcfunction(image_path, num_colors, offset=5000, max_dimensi
 parser = argparse.ArgumentParser(description="Process an image for Minecraft.")
 parser.add_argument("image", type=str, help="Path to the image file, e.g., foo.jpg")
 parser.add_argument("--generate-json", action="store_true", help="Generate JSON output instead of converting to .mcfunction (you must pass an image - fix this input bug - the image will not be used)")
+parser.add_argument("--json-file", type=str, default="blockcolormap.json", help="Path to the JSON file for the block color map. Defaults to 'blockcolormap.json'.")
 args = parser.parse_args()
 
 # Assuming the patterns are defined as follows:
@@ -178,7 +179,7 @@ if args.image and not args.generate_json:
     # If you want to look down from the sky and see your photo printed on the ground, set this to True
     # If you want your print to stand like a cardboard cutout, set this to False
     is_horizontal = False
-    colors_to_blocks = load_block_color_map("blockcolormap.json")
+    colors_to_blocks = load_block_color_map(args.json_file)
     # By default we use the number of colors in the block color map but you can reduce the number
     # num_colors = 256  # Number of colors for reduced palette
     num_colors = len(list(colors_to_blocks))

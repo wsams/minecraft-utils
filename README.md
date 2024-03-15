@@ -41,6 +41,12 @@ python3 mkmcfunction.py <image.png>
 cp image.mcfunction path/to/world/datapacks/your_data_pack_name/data/io/functions/
 ```
 
+You can also use a custom color block map by passing the  `--json-file` option. There are a few provided.
+
+```sh
+python3 mkmcfunction.py <image.png> --json-file blockcolormap-glass.json
+```
+
 In Minecraft open a terminal and run `reload`. You can also do this from your server command line.
 
 Since we processed `image.png` and created `image.mcfunction` we can run that function in a Minecraft terminal,
@@ -49,6 +55,10 @@ Since we processed `image.png` and created `image.mcfunction` we can run that fu
 /function io:image
 ```
 
-Below is a sample screenshot. There's still a lot of work to do.
+Below is a sample screenshot.
 
 ![sample image render in-game minecraft](screenshots/jug.png)
+
+Here's another view using the `blockcolormap-glass.json` color block map.
+
+![sample image render in-game minecraft with glass color block map](screenshots/jugtrans.png)
