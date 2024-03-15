@@ -168,13 +168,15 @@ if args.image and not args.generate_json:
 
     image_base_name, image_ext = parse_image_filename(args.image)
     image_path = f"{image_base_name}.{image_ext}"  # Replace with your image path
-    max_dimension = 100 # max width and height
-    min_z = 100 # lowest any block in the image will be rendered - basically sets the bottom row
-    # The offset code is commented for now - images are rendered at the player location
-    # This property is not used, it's just passed through for now until removed.
+    # Unused
     offset = 5000
-    # When is_horizontal is True, the image is printed on the surface and visible from above.
-    # When it is False, the image is printed standing veritcally like a cardboard cutout.
+    # If you have an image that is 5000x1000, this will scale the image so that neither the width
+    # nor the height is greater than 100. The result here would be 100x20.
+    max_dimension = 100
+    # This is the minimum height any block will be placed.
+    min_z = 100
+    # If you want to look down from the sky and see your photo printed on the ground, set this to True
+    # If you want your print to stand like a cardboard cutout, set this to False
     is_horizontal = False
     colors_to_blocks = load_block_color_map("blockcolormap.json")
     # By default we use the number of colors in the block color map but you can reduce the number

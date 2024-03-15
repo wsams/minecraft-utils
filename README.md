@@ -21,9 +21,20 @@ In the directory `your_data_pack_name` create a file `pack.mcmeta` with these co
 
 Now clone this repository and run the `mkmcfunction.py` script on an image file. It can be a `.jpg` or `.png` file, and probably many others. Transparent (alpha channel) pixels will be replaced with `minecraft:air`. After running this script, it will output an `mcfunction` file with the same base name as the image. Copy this `mcfunction` file into your datapaack functions folder.
 
-You will want to open the script and find the `max_dimension` and `offset` variables at the bottom. The `max_dimension` controls the maximum width and height your image will be scaled down to. Either the width or the height will be the `max_dimension`.
+To configure the script open it and scroll down to the bottom where we check for `args.image`. Update these variables.
 
-The `offset` variable controls where the image will be created. What I do is `/tp 0 ~ 0` and then generate an image. You can fly north or south and generate different images. Once that area is filled I change `offset = 1000` and run `/tp 1000 ~ 1000` and that's where the images will be created. This part is a bit odd so any suggestions are welcome. I want the positioning of these images to be more intuitive and configurable.
+```py
+# If you have an image that is 5000x1000, this will scale the image so that neither the width
+# nor the height is greater than 100. The result here would be 100x20.
+max_dimension = 100
+# This is the minimum height any block will be placed.
+min_z = 100
+# If you want to look down from the sky and see your photo printed on the ground, set this to True
+# If you want your print to stand like a cardboard cutout, set this to False
+is_horizontal = False
+```
+
+Then render a `.mcfunction` file. I usually just put `mkmcfunction.py` in my datapack `functions` folder and omit the `cp` command.
 
 ```sh
 python3 mkmcfunction.py <image.png>
