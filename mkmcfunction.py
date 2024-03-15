@@ -83,7 +83,7 @@ def find_closest_color(r, g, b):
     
     return closest_color
 
-def convert_image_to_mcfunction(image_path, num_colors, offset=5000, max_dimension=200):
+def convert_image_to_mcfunction(image_path, num_colors, offset=5000, max_dimension=200, min_z=100, is_horizontal=False):
     # Load the image
     img = Image.open(image_path)
 
@@ -105,9 +105,7 @@ def convert_image_to_mcfunction(image_path, num_colors, offset=5000, max_dimensi
 
     # Generate Minecraft commands
     commands = []
-    is_horizontal = True
     # z is the base height of where we want the image to start when rendering vertically (the bottom row will be at this height)
-    z = 100
     # for y in range(resized_height):
     for y in range(resized_height - 1, -1, -1):
         for x in range(resized_width):
@@ -116,15 +114,17 @@ def convert_image_to_mcfunction(image_path, num_colors, offset=5000, max_dimensi
                 # handle transparent blocks
                 block = "minecraft:air"
             else:
-                block = colors_to_blocks.get(find_closest_color(r, g, b), "minecraft:glass")  # Default to air if no match found
-            x_use = x + offset
+                block = colors_to_blocks.get(find_closest_color(r, g, b), "minecraft:glass")
+            # x_use = x + offset
             if is_horizontal:
-                y_use = y + offset
-                commands.append(f"fill {x_use} ~ {y_use} {x_use} ~ {y_use} {block}")
+                # y_use = y + offset
+                # commands.append(f"fill {x_use} ~ {y_use} {x_use} ~ {y_use} {block}")
+                commands.append(f"fill ~{x} ~ ~{y} ~{x} ~ ~{y} {block}")
             else:
-                z_use = z + (resized_height - 1 - y)
+                z_use = min_z + (resized_height - 1 - y)
                 # y_use = ~ means image faces north/south
-                commands.append(f"fill {x_use} {z_use} ~ {x_use} {z_use} ~ {block}")
+                # commands.append(f"fill {x_use} {z_use} ~ {x_use} {z_use} ~ {block}")
+                commands.append(f"fill ~{x} {z_use} ~ ~{x} {z_use} ~ {block}")
     
     filename = f"{image_base_name}.mcfunction"
     with open(filename, "w") as file:
@@ -168,11 +168,16 @@ if args.image and not args.generate_json:
 
     image_base_name, image_ext = parse_image_filename(args.image)
     image_path = f"{image_base_name}.{image_ext}"  # Replace with your image path
-    max_dimension = 200 # max width and height
+    max_dimension = 100 # max width and height
+    min_z = 100 # lowest any block in the image will be rendered - basically sets the bottom row
+    # The offset code is commented for now - images are rendered at the player location
+    # This property is not used, it's just passed through for now until removed.
     offset = 5000
-
+    # When is_horizontal is True, the image is printed on the surface and visible from above.
+    # When it is False, the image is printed standing veritcally like a cardboard cutout.
+    is_horizontal = False
     colors_to_blocks = load_block_color_map("blockcolormap.json")
-
+    # By default we use the number of colors in the block color map but you can reduce the number
     # num_colors = 256  # Number of colors for reduced palette
     num_colors = len(list(colors_to_blocks))
 
