@@ -1,3 +1,29 @@
+# minecraft-utils
+
+Tools for generating Minecraft structures via `.mcfunction` datapacks.
+
+## AI house generation (new direction)
+
+Parametric **hollow homes** from ground / corner points, with optional AI prompt export and a plugin hook. Design brief: [`SPECS.md`](SPECS.md).
+
+```sh
+# Generate a sample cottage
+python3 housegen.py -c examples/sample_cottage.json -o sample_cottage.mcfunction
+
+# Export an LLM prompt for the same config (paste into your AI tool)
+python3 housegen.py -c examples/sample_cottage.json --prompt
+
+# Merge an AI JSON response, then build
+python3 housegen.py -c examples/sample_cottage.json --apply-ai ai_response.json -o house.mcfunction
+
+# Optional plugin directory
+python3 housegen.py -c examples/sample_cottage.json --plugins plugins -o house.mcfunction
+```
+
+Ground points use Minecraft coordinates `(x, y, z)` with **y = height**. Foundation modes can follow uneven corner heights (`follow_terrain`) or flatten. Interiors stay hollow; walls/floors/roof use the block ids you request.
+
+---
+
 # mkmcfunction.py
 
 ## Purpose
